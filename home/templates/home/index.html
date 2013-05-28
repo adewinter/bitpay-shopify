@@ -51,7 +51,7 @@
 
 
 <div id="orders">
-  <h2>Your recent orders</h2>
+  <h2>Your recent orders - <strong><a href="/hook/register">Register Hooks</a></strong></h2>
   {% if orders %}
     <ul>
     {% for order in orders %}
@@ -62,6 +62,16 @@
             <span class="price">{{ order.total_price }} {{ order.currency }}</span>
             <span class="highlight">{{ order.financial_status }}</span>
             by <span class="note">{{ order.billing_address.name }}</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="order box">
+          <div class="wrapper">
+            <strong>Details: </strong><a href="/alterorder/{{ order.id }}">Alter Order</a><br />
+            {% for key,value in order.attributes.items %}
+              <span class="price">{{ key }}: </span> {{ value }} <br />
+            {% endfor %}
           </div>
         </div>
       </li>
