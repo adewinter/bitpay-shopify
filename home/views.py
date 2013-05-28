@@ -89,14 +89,14 @@ def make_bitpay_invoice(request, hook_data):
         'orderID': order_id,
         'itemDesc': 'Order for %s %s on %s' % (customer_name, shop_url),
         'buyerName': customer_name,
-        'buyerAddress1': shipping_address['address1']
-        'buyerAddress2': shipping_address['address2']
-        'buyerCity': shipping_address['city']
-        'buyerState': shipping_address['province']
-        'buyerZip': shipping_address['zip']
-        'buyerCountry': shipping_address['country']
-        'buyerEmail': hook_data['email']
-        'buyerPhone': shipping_address['phone']
+        'buyerAddress1': shipping_address['address1'],
+        'buyerAddress2': shipping_address['address2'],
+        'buyerCity': shipping_address['city'],
+        'buyerState': shipping_address['province'],
+        'buyerZip': shipping_address['zip'],
+        'buyerCountry': shipping_address['country'],
+        'buyerEmail': hook_data['email'],
+        'buyerPhone': shipping_address['phone'],
     }
     headers = {'content-type': 'application/json'}
     r = requests.post("https://bitpay.com/api/invoice", 
@@ -105,7 +105,7 @@ def make_bitpay_invoice(request, hook_data):
                         auth=(BITPAY_API_KEY, ''))
     logger.debug('=======================')
     logger.debug('CREATED BITPAY INVOICE!')
-    logger.debug('Request text: %s' r.text)
+    logger.debug('Request text: %s' % r.text)
     logger.debug('=======================')
 
 
