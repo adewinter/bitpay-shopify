@@ -167,11 +167,11 @@ def send_bitpay_invoice_email(to_addr, name, invoice_url, shop_url):
 @csrf_exempt
 def bitpay_hook(request, order_id):
     logger.debug('===============================')
-    logger.debug('Received a BITPAY HOOK!')
-    logger.debug('Request Object: %s' % request)
-    logger.debug('Request body: %s' % request.body)
-    logger.debug('Reqest Method: %s' % request.method)
-    logger.debug('ORDER_ID: %s' % order_id)
+    logger.debug('BITPAY_HOOK Received a BITPAY HOOK!')
+    logger.info('BITPAY_HOOK Request Object: %s' % request)
+    logger.debug('BITPAY_HOOK Request body: %s' % request.body)
+    logger.debug('BITPAY_HOOK Reqest Method: %s' % request.method)
+    logger.debug('BITPAY_HOOK ORDER_ID: %s' % order_id)
     logger.debug('===================================')
     return HttpResponse('Hook Call received')
 
