@@ -138,6 +138,14 @@ else:
         'django.contrib.staticfiles',
     )
 
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = '587'
+EMAIL_HOST_USER = 'adewinter@olympuslabs.com'
+EMAIL_HOST_PASSWORD = 'qsczse12'
+EMAIL_USE_TLS = True
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error.

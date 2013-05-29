@@ -1,0 +1,11 @@
+{
+    "button": {
+        "name": "test",
+        "price_string": "1.23",
+        "price_currency_iso": "USD",
+        "custom": "Order123",
+        "description": "Sample description",
+        "type": "buy_now",
+        "style": "custom_large"
+    }
+}
