@@ -192,7 +192,8 @@ LOGGING = {
     }
 }
 
-TIME_ZONE = 'utc'
+TIME_ZONE = 'UTC'
+
 try:
     from localsettings import *
     print 'Using Localsettings'
