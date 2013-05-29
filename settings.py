@@ -191,3 +191,9 @@ LOGGING = {
         },
     }
 }
+
+try:
+    from localsettings import *
+    print 'Using Localsettings'
+except ImportError:
+    print 'Localsettings not found, using sane defaults.'
