@@ -1,6 +1,7 @@
 from fabric.api import *
 
 env.hosts = ['base102.net']
+env.user = 'adewinter'
 
 
 def push_local():
@@ -9,11 +10,12 @@ def push_local():
 
 def pull_remote():
     with cd('/opt/www/bitpay-shopify'):
-        run('git pull')  # runs the command on the remote environment
+        run('whoami')
+        run('git pull origin master')  # runs the command on the remote environment
 
 
 def supervisor_cmd(cmd):
-    sudo('supervisorctl %s' % cmd)
+    sudo('supervisorctl %s all' % cmd)
 
 
 def supervisor_restart():
