@@ -178,3 +178,10 @@ def bitpay_hook(request, order_id):
 def design(request):
     return render_to_response('home/design.html', {},
                               context_instance=RequestContext(request))
+
+@csrf_exempt
+def postsms(request):
+    logger.debug('===============')
+    logger.debug('POST SMS RECEIVED: %s :: %s' % (request.body, request.method))
+    logger.debug('Request obj' % request)
+    return HttpResponse('SUCCESS')

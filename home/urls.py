@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     url(r'^hook/register/$', 'home.views.register_hooks'),
     url(r'^hook/clear/$', 'home.views.clear_hooks'),
     url(r'^hook/bitpay/(\d+)/$', 'home.views.bitpay_hook'),
+    url(r'^postsms/$', 'home.views.postsms'),
 )
 
 
