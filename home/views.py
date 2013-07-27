@@ -183,5 +183,5 @@ def design(request):
 def postsms(request):
     logger.debug('===============')
     logger.debug('POST SMS RECEIVED: %s :: %s' % (request.body, request.method))
-    logger.debug('Request obj' % request)
+    logger.debug('Request obj %s' % request)
     return HttpResponse('SUCCESS')
