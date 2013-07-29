@@ -11,6 +11,10 @@ import requests
 import urlparse
 import json
 import urllib
+import aamnotifs as notifs
+logging.getLogger('pika').setLevel(logging.INFO)
+
+n = notifs.Notifs("amqp://adewinter:qsczse12@base102.net:5672/%2f")
 
 APP_URL = getattr(settings, 'APP_URL', '')
 
@@ -181,7 +185,15 @@ def design(request):
 
 @csrf_exempt
 def postsms(request):
-    logger.debug('===============')
-    logger.debug('POST SMS RECEIVED: %s :: %s' % (request.body, request.method))
-    logger.debug('Request obj %s' % request)
+    if request.method == "POST" and request.body:
+        json_data = json.loads(request.body)
+        message = json_data.get('message',None)
+        number = json_data.get('number', None)
+    else:
+        message = 'Error getting message (or fake amqp req)'
+        number = 'ERROR'
+
+    logger.info('POST SMS RECEIVED: %s :: %s' % (request.body, request.method))
+    logger.info('Sending to AMQP: number, message:: %s, %s' % (number, message))
+    n.send("sms_notification", "Number::%s" % number, "Msg::%s" % message)    
     return HttpResponse('SUCCESS')
