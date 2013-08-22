@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-    
+from django.http import HttpResponse, HttpResponseServerError
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 import shopify
@@ -251,7 +251,7 @@ def sms_send(request):
 
     payload = {
         'data': data,
-        'channels': ['sms_send']
+        'channels': ['send_sms']
     }
 
     r = requests.post(url, data=json.dumps(payload), headers=headers)
