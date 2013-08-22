@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+    
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 import shopify
@@ -241,12 +241,17 @@ def sms_send(request):
         "Content-Type": "application/json"
     }
     url = getattr(settings, 'PARSE_PUSH_URL')
-    payload = {
+    data = {
         "action": "com.basetentwo.smstohttp.SEND_SMS",
         "alert": "Sending an SMS",
         "message": message,
         "number": number,
         "title": "RMac Activity"
+    }
+
+    payload = {
+        'data': data,
+        'channels': ['sms_send']
     }
 
     r = requests.post(url, data=json.dumps(payload), headers=headers)
