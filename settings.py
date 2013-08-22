@@ -194,6 +194,12 @@ LOGGING = {
 
 TIME_ZONE = 'UTC'
 
+PARSE_API_URL = 'https://api.parse.com'
+PARSE_PUSH_URL = '%s/1/push' % PARSE_API_URL
+
+PARSE_APP_ID = 'h6xOsjUapysYL613ph7Obx9cH3Kp81IXvNIN9FMK'
+PARSE_REST_API_KEY = 'hsKtf9frAreDEoy751IDm2HnzVVD1ThED0LbHSFv'
+
 try:
     from localsettings import *
     print 'Using Localsettings'

@@ -191,7 +191,11 @@ def design(request):
                               context_instance=RequestContext(request))
 
 @csrf_exempt
-def postsms(request):
+def sms_received(request):
+    """
+    An SMS was received on the android device.  A notification get_host
+    sent to the AMQP Server
+    """
     if request.method == "POST" and request.body:
         json_data = json.loads(request.body)
         message = json_data.get('message',None)
@@ -207,5 +211,49 @@ def postsms(request):
         logger.debug('Here is the notifier: %s' % notifier)
         connectNotifier()
     logger.debug('Attempting to send message, number: %s, %s' % (message, number))
-    notifier.send("sms_notification", "Number::%s" % number, "Msg::%s" % message)    
+    notifier.send("sms_notification", number, message)
+    logger.debug('Message sent!')   
     return HttpResponse('SUCCESS')
+
+
+
+@csrf_exempt
+def sms_send(request):
+    """
+    A non-android client would like to send an SMS message
+    via an android device.  Takes an HTTP POST and uses PARSE push notification
+    framework to communicate with the android device
+    """
+    if request.method == "POST" and request.body:
+        json_data = json.loads(request.body)
+        message = json_data.get('message',None)
+        number = json_data.get('number', None)
+    else:
+        message = 'Error getting message'
+        number = 'ERROR'
+
+    logger.info('POST Hook to SEND SMS: %s :: %s' % (request.body, request.method))
+    logger.info('Attempting to do a POST to Parse PUSH Api')
+
+    headers = {
+        "X-Parse-Application-Id": getattr(settings, 'PARSE_APP_ID', ''),
+        "X-Parse-REST-API-Key": getattr(settings, 'PARSE_REST_API_KEY', ''),
+        "Content-Type": "application/json"
+    }
+    url = getattr(settings, 'PARSE_PUSH_URL')
+    payload = {
+        "action": "com.basetentwo.smstohttp.SEND_SMS",
+        "alert": "Sending an SMS",
+        "message": message,
+        "number": number,
+        "title": "RMac Activity"
+    }
+
+    r = requests.post(url, data=json.dumps(payload), headers=headers)
+
+
+    logger.info('Parse Response code: %s, Response Body: %s' % (r.status_code, r.text))
+    if r.status_code==200:
+        return HttpResponse('SUCCESS')
+    else:
+        return HttpResponseServerError('There was an error. \nParse Response code: %s, Response Body: %s' % (r.status_code, r.text))
